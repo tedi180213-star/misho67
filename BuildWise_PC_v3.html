@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="bg"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0a0d14"><title>BuildWise PC</title>
+<style>
+:root{--bg:#0a0d14;--panel:#121824;--line:#28364b;--txt:#eef3fb;--muted:#91a0b5;--blue:#82aaff;--cyan:#66e2df;--green:#6bdd9e;--orange:#ffbd75;--red:#ff7a8a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(ellipse at 85% -10%,#1c3153 0,transparent 35%),var(--bg);color:var(--txt);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,sans-serif;overflow-x:hidden;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+body.lock{overflow:hidden}
+button,input,select{font:inherit;touch-action:manipulation}
+header{position:sticky;top:0;z-index:20;background:#0c111bf0;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.top{max-width:1240px;margin:auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-size:21px;font-weight:950;letter-spacing:-1px}.brand i{font-style:normal;color:var(--cyan)}.sub{font-size:10px;letter-spacing:1.7px;color:var(--muted)}
+nav{display:flex;gap:6px}nav button{background:transparent;color:#b9c7da;border:1px solid transparent;padding:8px 12px;min-height:40px}nav button:hover{background:#1b2638;border-color:#34445c;color:#fff}
+#burger{display:none;width:46px;min-height:44px;padding:0;font-size:20px}
+main{max-width:1240px;margin:auto;padding:22px 20px 40px}
+.hero{margin-bottom:20px}.hero h1{font-size:clamp(28px,5vw,46px);line-height:1.04;letter-spacing:-1.6px;margin:8px 0}.hero p{color:var(--muted);max-width:600px;margin:0}
+.eyebrow{font-size:11px;letter-spacing:2px;color:var(--cyan);font-weight:850}
+.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,.8fr);gap:18px;align-items:start}
+.panel{background:linear-gradient(145deg,#151e2c,#101620);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 18px 45px #0003;min-width:0}
+.panel h2{font-size:17px;margin:0 0 12px}
+button{border:0;border-radius:11px;padding:11px 14px;min-height:44px;background:linear-gradient(100deg,#6e9df5,#5fd3e6);color:#071321;font-weight:900;cursor:pointer;font-size:13px;transition:.18s}
+button:hover{filter:brightness(1.1);transform:translateY(-1px)}button:active{transform:scale(.98)}
+button.secondary{background:#263447;color:#e5edf8;border:1px solid #3b4c63}button.danger{background:#3a2229;color:#ffc0c8;border:1px solid #6b3340}
+input,select{width:100%;background:#0b111b;color:var(--txt);border:1px solid #34445a;border-radius:10px;padding:11px;min-height:44px;font-size:16px;outline:none}
+input:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #66e2df22}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.scroll{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;scrollbar-width:thin}
+.tab{flex:0 0 auto;background:#202b3b;color:#aebbd0;border:1px solid #34445c}.tab.active{background:#263d5e;border-color:#6f9bdf;color:#fff}
+.aiBox{background:linear-gradient(110deg,#182c42,#17263a);border:1px solid #355674;border-radius:14px;padding:14px;margin-bottom:16px}
+.aiBox p{font-size:12px;color:#b5c9df;margin:4px 0 10px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fields label,.tools label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
+.brands{display:flex;gap:8px;flex-wrap:wrap}.brands label{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--txt);background:#0b111b;border:1px solid #34445a;border-radius:10px;padding:0 12px;min-height:44px;margin:0}.brands input{width:20px;min-height:20px;height:20px;padding:0}
+.aiBox>button{width:100%;margin-top:10px}.smartOut{font-size:12px;color:#cfe0f3;margin-top:12px;line-height:1.55}.smartOut:empty{display:none}
+.tools{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.partsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:12px}
+.card{border:1px solid var(--line);background:#0d141f;border-radius:15px;overflow:hidden;min-width:0;display:flex;flex-direction:column;transition:.2s;animation:in .35s both}
+.card:hover{transform:translateY(-3px);border-color:#4a6c9c;box-shadow:0 14px 30px #0006}.card.sel{border-color:#66e2df;box-shadow:0 0 0 1px #66e2df66,0 0 24px #66e2df22}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.img{position:relative;aspect-ratio:4/3;background:radial-gradient(ellipse at center,#22354f,#0a0f18 78%);display:flex;align-items:center;justify-content:center;padding:10px}
+.img img{width:100%;height:100%;object-fit:contain}.fb{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;height:100%;font-size:10px;color:var(--muted);text-align:center}.fb svg{width:70%;height:80%}
+.cond,.selmark{position:absolute;top:8px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px}.cond{left:8px;background:#0008;border:1px solid #3b4c63;color:#cfe}.cond.used{color:var(--orange);border-color:#6b512a}.selmark{right:8px;background:var(--cyan);color:#06222a}
+.ci{padding:12px;display:flex;flex-direction:column;gap:7px;flex:1}.mfr{font-size:10px;color:var(--cyan);letter-spacing:1px;font-weight:900;text-transform:uppercase}
+.ci h3{margin:0;font-size:14px;line-height:1.25;min-height:35px}.specs{display:flex;flex-wrap:wrap;gap:5px}.specs span{font-size:10.5px;background:#17212f;border:1px solid #28364b;border-radius:7px;padding:3px 7px;color:#b9c7da}
+.bd{font-size:11px;border-radius:8px;padding:6px 8px;line-height:1.3}.bd.ok{background:#12291f;color:#9ff0c1;border:1px solid #2b5a42}.bd.bad{background:#321a20;color:#ffb3bd;border:1px solid #6b3340}.bd.warn{background:#302619;color:#ffe0a4;border:1px solid #6b512a}.bd.na{background:#141c29;color:var(--muted);border:1px solid #28364b}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}.prow b{font-size:20px;letter-spacing:-.5px}.cmp{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin:0;min-height:44px;cursor:pointer}.cmp input{width:20px;min-height:20px;height:20px;padding:0}
+.btns{display:grid;grid-template-columns:1.5fr 1fr;gap:7px}.btns button{padding:9px}
+.right{position:sticky;top:calc(70px + env(safe-area-inset-top));max-height:calc(100vh - 90px);overflow-y:auto;overscroll-behavior:contain}
+.total{font-size:34px;font-weight:950;letter-spacing:-1.5px}.total small{font-size:12px;color:var(--muted);letter-spacing:0;font-weight:400}
+.brow{display:grid;grid-template-columns:44px 1fr auto;gap:9px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}
+.brow .th{width:44px;height:44px;border-radius:8px;background:#0a0f18;padding:3px}.th img{width:100%;height:100%;object-fit:contain}.th .fb span{display:none}.th .fb svg{width:100%;height:100%}
+.brow small{display:block;color:var(--muted);font-size:10px}.brow .nm{min-width:0;overflow-wrap:anywhere}.brow .ac{display:flex;gap:5px;align-items:center}.brow .ac button{padding:0;min-width:44px;background:#202b3b;color:#cfe0f3;border:1px solid #34445c}
+.brow.empty{opacity:.75;cursor:pointer}.brow.empty .th{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:20px}
+.notice{padding:11px;border-radius:11px;margin-top:12px;font-size:12px;background:#152b22;border:1px solid #315c46;color:#b8f1ce}.notice.warn{background:#302619;border-color:#6b512a;color:#ffe0a4}.notice.bad{background:#321a20;border-color:#6b3340;color:#ffb3bd}.notice.na{background:#141c29;border-color:#28364b;color:#b5c3d6}
+details summary{cursor:pointer;min-height:36px;padding-top:8px;font-weight:700}.ck{display:grid;grid-template-columns:18px 1fr;gap:6px;font-size:12px;padding:5px 0;line-height:1.35}.ck.ok b{color:var(--green)}.ck.bad b{color:var(--red)}.ck.warn b{color:var(--orange)}.ck.na b{color:var(--muted)}.ck.na{color:var(--muted)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.acts .w{grid-column:1/-1}
+.fpsc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.chips button{background:#17212f;color:#9fb2ca;border:1px solid #28364b;padding:6px 10px;min-height:36px;font-weight:600}.chips button.on{background:#1d3a52;color:#fff;border-color:#4f9ab8}
+.fr{display:flex;justify-content:space-between;gap:8px;background:#0c131e;border:1px solid var(--line);padding:9px 11px;border-radius:10px;margin-bottom:6px;font-size:12px}.fr b{color:var(--green);font-size:16px;white-space:nowrap}.fr small{display:block;color:var(--muted);font-size:10px}
+.empty,.tiny{color:var(--muted);font-size:12px}.empty{padding:16px;text-align:center}.tiny{font-size:11px;margin-top:10px;line-height:1.45}
+.toast{position:fixed;bottom:calc(86px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#eaf2ff;color:#101827;padding:11px 16px;border-radius:30px;font-size:13px;font-weight:800;display:none;z-index:60;max-width:92vw;text-align:center}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#0c111bf5;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;justify-content:space-between;gap:10px}.bar b{font-size:20px}.bar small{display:block;font-size:10px;color:var(--muted)}
+.modal{position:fixed;inset:0;z-index:50;background:#000a;display:flex;align-items:flex-end;justify-content:center;padding:0}.modal[hidden]{display:none}
+.mb{position:relative;background:#101722;border:1px solid var(--line);border-radius:20px 20px 0 0;width:100%;max-width:720px;max-height:92vh;overflow:auto;-webkit-overflow-scrolling:touch;padding:20px 18px calc(20px + env(safe-area-inset-bottom))}
+@media(min-width:700px){.modal{align-items:center;padding:20px}.mb{border-radius:20px}}
+.x{position:absolute;right:12px;top:12px;width:44px;padding:0;background:#263447;color:#fff;border:1px solid #3b4c63}.mb h2{margin:4px 44px 8px 0}.mb h4{margin:16px 0 6px;color:var(--cyan);font-size:12px;letter-spacing:1px}.mimg{aspect-ratio:16/10;background:radial-gradient(ellipse at center,#22354f,#0a0f18 78%);border-radius:14px;padding:12px;margin-bottom:12px}.mimg .fb,.mimg img{width:100%;height:100%}
+.price{font-size:26px;font-weight:900}.price small{font-size:12px;color:var(--muted);font-weight:400}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}table.spec{width:100%;border-collapse:collapse;font-size:12px}.spec td,.spec th{padding:8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.spec td:first-child{color:var(--muted);white-space:nowrap}.spec th{min-width:130px;font-size:12px}
+.sv{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.sv>div:first-child{min-width:0;overflow-wrap:anywhere}.sv small{display:block;color:var(--muted)}
+textarea{width:100%;min-height:150px;background:#0b111b;color:var(--txt);border:1px solid #34445a;border-radius:10px;padding:10px;font-size:16px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.right{position:static;max-height:none}.bar{display:flex}#burger{display:block}
+nav{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;background:#0c111bfa;padding:10px 16px 14px;border-bottom:1px solid var(--line)}nav.open{display:flex}nav button{text-align:left;min-height:48px;font-size:15px}
+.tools{grid-template-columns:1fr 1fr}.tools>div:first-child{grid-column:1/-1}}
+@media(max-width:480px){main{padding:16px 12px 30px}.top{padding:8px 12px}.panel{padding:13px}.fields{grid-template-columns:1fr}.total{font-size:30px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><div class="top"><div><div class="brand">Build<i>Wise</i> PC</div><div class="sub">CUSTOM PC CONFIGURATOR</div></div>
+<nav id="nav"><button class="secondary" data-act="go" data-id="builder">Части</button><button class="secondary" data-act="go" data-id="smartBox">Smart Build</button><button class="secondary" data-act="go" data-id="summary">Моят билд</button><button class="secondary" data-act="go" data-id="fps">FPS</button><button class="secondary" data-act="load">Запазени</button></nav>
+<button id="burger" class="secondary" data-act="menu" aria-label="Меню" aria-expanded="false">☰</button></div></header>
+<main>
+<section class="hero"><div class="eyebrow">BUILD IT YOUR WAY</div><h1>Сглоби компютъра<br>по твой вкус.</h1><p>Избирай частите сам или използвай Smart Build. Съвместимостта се проверява по зададени правила, а всяка част можеш да смениш ръчно.</p></section>
+<div class="layout"><section class="panel" id="builder">
+<h2>Конфигуратор</h2>
+<div class="tabs"><button class="tab active" id="manualTab" data-act="mode" data-id="manual">Избирам сам</button><button class="tab" id="smartTab" data-act="mode" data-id="smart">Smart Build</button></div>
+<div class="aiBox" id="smartBox"><b>✨ Smart Build — автоматичен избор</b><p><b style="display:inline">Това е локален алгоритъм с правила и точкуване, не е AI модел.</b> Подбира от наличния каталог и после можеш да смениш всяка част ръчно.</p>
+<div class="fields"><div><label for="budget">Бюджет (€)</label><input id="budget" type="number" inputmode="numeric" min="300" value="1000"></div>
+<div><label for="usage">Предназначение</label><select id="usage"><option value="gaming">Gaming</option><option value="competitive">Competitive Gaming</option><option value="streaming">Streaming</option><option value="editing">Editing</option><option value="work">Работа</option></select></div>
+<div><label for="resolution">Резолюция</label><select id="resolution"><option value="1080">1080p</option><option value="1440">1440p</option><option value="4k">4K</option></select></div>
+<div><label for="condition">Части</label><select id="condition"><option value="mixed">Нови + употребявани</option><option value="new">Само нови</option><option value="used">Употребявани, където има</option></select></div></div>
+<div style="margin-top:10px"><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Предпочитани марки</label><div class="brands"><label><input type="checkbox" value="AMD" checked>AMD</label><label><input type="checkbox" value="Intel" checked>Intel</label><label><input type="checkbox" value="NVIDIA" checked>NVIDIA</label></div></div>
+<button data-act="smart">ИЗБЕРИ ЧАСТИТЕ ЗА МЕН</button><div class="smartOut" id="smartOut"></div></div>
+<div class="tabs scroll" id="categoryTabs"></div>
+<div class="tools"><div><label for="q">Търсене</label><input id="q" type="search" placeholder="Модел, марка…" autocomplete="off"></div><div><label for="sort">Подреди</label><select id="sort"><option value="def">По каталог</option><option value="asc">Цена ↑</option><option value="desc">Цена ↓</option><option value="name">Име А–Я</option></select></div><div><label for="fb">Производител</label><select id="fb"></select></div><div><label for="fc">Състояние</label><select id="fc"><option value="all">Всички</option><option value="new">Нови</option><option value="used">Употребявани</option></select></div></div>
+<div class="partsGrid" id="cards"></div><div class="tiny">Цените и състоянието (ново/употребявано) са ориентировъчни стойности от каталога и не се обновяват онлайн.</div>
+</section>
+<aside class="right"><section class="panel" id="summary"><div class="eyebrow">YOUR BUILD</div><div class="total" id="total">0 € <small>/ общо</small></div><div id="rows"></div>
+<div class="notice na" id="compat"></div><details id="ckd"><summary>Подробна проверка</summary><div id="cklist"></div><div class="tiny">Не се проверяват: конектори на захранването, брой M.2 слотове, точни дължини на конкретни модели, RAM QVL, предни портове. Провери при производителя преди покупка.</div></details>
+<div class="acts"><button data-act="copy">КОПИРАЙ</button><button data-act="share">СПОДЕЛИ</button><button data-act="save" class="secondary">ЗАПАЗИ</button><button data-act="load" class="secondary">ЗАРЕДИ</button><button data-act="compare" class="secondary w" id="cmpBtn">СРАВНИ (0)</button><button data-act="clear" class="danger w">ИЗЧИСТИ</button></div></section>
+<section class="panel" id="fps" style="margin-top:14px"><h2>Очаквани FPS</h2><div class="fpsc"><div><label class="tiny" for="fres">Резолюция</label><select id="fres"><option value="1080">1080p</option><option value="1440">1440p</option><option value="4k">4K</option></select></div><div><label class="tiny" for="fq">Настройки</label><select id="fq"><option value="low">Ниски</option><option value="med">Средни</option><option value="high" selected>Високи</option><option value="ultra">Ултра</option></select></div></div><div class="chips" id="gchips"></div><div id="fpsOut"></div>
+<div class="tiny">⚠ Груби ориентири, не измерени бенчмаркове. Моделът взема по-ниското от лимита на GPU и на CPU по относителни индекси на каталога; не отчита RAM, драйвери, сцена, DLSS/FSR, ray tracing.</div></section></aside></div>
+</main>
+<div class="bar"><div><small>ОБЩО</small><b id="barTotal">0 €</b></div><button data-act="go" data-id="summary">МОЯТ БИЛД ↑</button></div>
+<div class="toast" id="toast" role="status"></div><div class="modal" id="modal" hidden></div>
+<script>
+'use strict';
+/* Снимки: добави реални URL адреси тук, напр. 'cpu-r5-5600':'https://…/ryzen-5-5600.png'. Могат да се задават и от „Детайли“ → „Своя снимка“. */
+const IMAGES={};
+const art=(k)=>{let shapes={cpu:`<rect x="38" y="25" width="84" height="64" rx="8" fill="#9caec5" stroke="#d7e5f7" stroke-width="3"/><rect x="48" y="35" width="64" height="44" rx="4" fill="#263c58"/><path d="M28 35h10M28 50h10M28 65h10M28 80h10M122 35h10M122 50h10M122 65h10M122 80h10" stroke="#8eb5ec" stroke-width="4"/>`,gpu:`<rect x="20" y="37" width="120" height="50" rx="8" fill="#364a62" stroke="#a9c6eb" stroke-width="3"/><circle cx="58" cy="62" r="17" fill="#111b29" stroke="#80c6e9" stroke-width="4"/><circle cx="105" cy="62" r="17" fill="#111b29" stroke="#80c6e9" stroke-width="4"/><path d="M140 50h9v24h-9" fill="#e0b76f"/>`,board:`<rect x="36" y="13" width="90" height="100" rx="5" fill="#234d48" stroke="#7bd4ba" stroke-width="3"/><rect x="59" y="30" width="42" height="42" rx="4" fill="#a4b7c5"/><rect x="45" y="83" width="18" height="20" fill="#9aaabe"/><path d="M104 83h12M104 91h12M104 99h12M45 22h20M45 112h20" stroke="#b9d4ce" stroke-width="3"/>`,ram:`<rect x="22" y="44" width="128" height="37" rx="5" fill="#304967" stroke="#9bbde5" stroke-width="3"/><path d="M35 44v-10h18v10m12 0V34h18v10m12 0V34h18v10m12 0v-10h18v10" stroke="#7ce3d2" stroke-width="4"/><path d="M35 81v9m15-9v9m15-9v9m15-9v9m15-9v9m15-9v9m15-9v9" stroke="#e2c57c" stroke-width="3"/>`,ssd:`<rect x="24" y="37" width="124" height="50" rx="8" fill="#344b66" stroke="#a9c7eb" stroke-width="3"/><rect x="42" y="48" width="27" height="27" rx="3" fill="#192a40"/><rect x="78" y="48" width="27" height="27" rx="3" fill="#192a40"/><circle cx="130" cy="62" r="4" fill="#7de0c4"/>`,psu:`<rect x="32" y="24" width="106" height="78" rx="8" fill="#344154" stroke="#a9bad2" stroke-width="3"/><circle cx="82" cy="62" r="25" fill="#101722" stroke="#7f9fc9" stroke-width="3"/><circle cx="82" cy="62" r="6" fill="#83b9d8"/><path d="M82 37l7 18 18 7-18 7-7 18-7-18-18-7 18-7z" fill="#526e91"/>`,case:`<rect x="48" y="9" width="70" height="105" rx="7" fill="#34465e" stroke="#a9c9e8" stroke-width="3"/><rect x="56" y="18" width="54" height="87" rx="4" fill="#18283d"/><circle cx="83" cy="39" r="13" fill="none" stroke="#76d9dc" stroke-width="4"/><circle cx="83" cy="75" r="13" fill="none" stroke="#a78bfa" stroke-width="4"/>`,cooler:`<rect x="38" y="20" width="90" height="90" rx="8" fill="#64768b" stroke="#b6c9df" stroke-width="3"/><circle cx="83" cy="65" r="31" fill="#152235" stroke="#76cde2" stroke-width="4"/><circle cx="83" cy="65" r="6" fill="#8ec4e8"/><path d="M83 34l8 24 23 7-23 8-8 23-8-23-23-8 23-7z" fill="#5e8ab4"/>`};return `<svg viewBox="0 0 170 125" role="img" aria-label="${k} illustration">${shapes[k]}</svg>`};
+const mk=(cat,id,name,brand,price,o)=>Object.assign({cat,id:cat+'-'+id,name,brand,price,cond:'new'},o);
+const DB=[
+mk('cpu','r5-5600','AMD Ryzen 5 5600','AMD',95,{socket:'AM4',ddr:['DDR4'],perf:62,w:88,d:'6 ядра / 12 нишки'}),
+mk('cpu','r7-5700x3d','AMD Ryzen 7 5700X3D','AMD',185,{socket:'AM4',ddr:['DDR4'],perf:88,w:105,d:'Гейминг ъпгрейд за AM4'}),
+mk('cpu','r5-7500f','AMD Ryzen 5 7500F','AMD',155,{socket:'AM5',ddr:['DDR5'],perf:83,w:88,d:'6 ядра / 12 нишки'}),
+mk('cpu','r5-7600','AMD Ryzen 5 7600','AMD',185,{socket:'AM5',ddr:['DDR5'],perf:88,w:88,d:'6 ядра / 12 нишки'}),
+mk('cpu','r7-7800x3d','AMD Ryzen 7 7800X3D','AMD',335,{socket:'AM5',ddr:['DDR5'],perf:115,w:120,d:'8 ядра / 16 нишки'}),
+mk('cpu','i5-12400f','Intel Core i5-12400F','Intel',115,{socket:'LGA1700',ddr:['DDR4','DDR5'],perf:67,w:117,d:'6 ядра / 12 нишки'}),
+mk('cpu','i5-14400f','Intel Core i5-14400F','Intel',175,{socket:'LGA1700',ddr:['DDR4','DDR5'],perf:82,w:148,d:'10 ядра'}),
+mk('gpu','rx6600','AMD Radeon RX 6600 8GB','AMD',150,{cond:'used',perf:42,w:132,len:240,vram:8,d:'8 GB VRAM'}),
+mk('gpu','rtx3060','NVIDIA GeForce RTX 3060 12GB','NVIDIA',190,{cond:'used',perf:49,w:170,len:242,vram:12,d:'12 GB VRAM'}),
+mk('gpu','rx6700xt','AMD Radeon RX 6700 XT 12GB','AMD',235,{cond:'used',perf:67,w:230,len:267,vram:12,d:'12 GB VRAM'}),
+mk('gpu','rtx3070','NVIDIA GeForce RTX 3070 8GB','NVIDIA',250,{cond:'used',perf:65,w:220,len:242,vram:8,d:'8 GB VRAM'}),
+mk('gpu','rx7700xt','AMD Radeon RX 7700 XT 12GB','AMD',390,{perf:91,w:245,len:267,vram:12,d:'12 GB VRAM'}),
+mk('gpu','rtx4070','NVIDIA GeForce RTX 4070 12GB','NVIDIA',440,{perf:96,w:200,len:244,vram:12,d:'12 GB VRAM'}),
+mk('gpu','rx7800xt','AMD Radeon RX 7800 XT 16GB','AMD',465,{perf:105,w:263,len:287,vram:16,d:'16 GB VRAM'}),
+mk('gpu','rtx4070s','NVIDIA GeForce RTX 4070 SUPER 12GB','NVIDIA',520,{perf:112,w:220,len:244,vram:12,d:'12 GB VRAM'}),
+mk('gpu','rtx5070','NVIDIA GeForce RTX 5070 12GB','NVIDIA',590,{perf:120,w:250,len:242,vram:12,d:'12 GB VRAM'}),
+mk('board','b550m','MSI B550M PRO-VDH','MSI',90,{socket:'AM4',ddr:'DDR4',ff:'mATX',slots:4,max:128,d:'mATX'}),
+mk('board','b550t','MSI B550 Tomahawk','MSI',125,{socket:'AM4',ddr:'DDR4',ff:'ATX',slots:4,max:128,d:'ATX'}),
+mk('board','b650m','ASRock B650M-HDV/M.2','ASRock',120,{socket:'AM5',ddr:'DDR5',ff:'mATX',slots:2,max:128,d:'mATX · 2 RAM слота'}),
+mk('board','b650gp','MSI B650 Gaming Plus WiFi','MSI',155,{socket:'AM5',ddr:'DDR5',ff:'ATX',slots:4,max:128,d:'ATX'}),
+mk('board','b760m','MSI PRO B760M-A DDR4','MSI',120,{socket:'LGA1700',ddr:'DDR4',ff:'mATX',slots:4,max:128,d:'mATX'}),
+mk('ram','16d4','16GB DDR4 3200 (2×8)','Generic',35,{ddr:'DDR4',gb:16,sticks:2,mhz:3200,d:'Dual channel',gen:1}),
+mk('ram','32d4','32GB DDR4 3600 (2×16)','Generic',65,{ddr:'DDR4',gb:32,sticks:2,mhz:3600,d:'Dual channel',gen:1}),
+mk('ram','32d5','32GB DDR5 6000 (2×16)','Generic',95,{ddr:'DDR5',gb:32,sticks:2,mhz:6000,d:'Dual channel',gen:1}),
+mk('ram','64d5','64GB DDR5 6000 (2×32)','Generic',185,{ddr:'DDR5',gb:64,sticks:2,mhz:6000,d:'Dual channel',gen:1}),
+mk('ssd','500','500GB NVMe SSD','Generic',35,{gb:500,ifc:'PCIe NVMe M.2',d:'PCIe NVMe',gen:1}),
+mk('ssd','1t','1TB NVMe SSD','Generic',55,{gb:1000,ifc:'PCIe NVMe M.2',d:'PCIe NVMe',gen:1}),
+mk('ssd','2t','2TB NVMe SSD','Generic',105,{gb:2000,ifc:'PCIe NVMe M.2',d:'PCIe NVMe',gen:1}),
+mk('psu','650','650W 80+ Gold','Generic',85,{watt:650,d:'Качествен модел',gen:1}),
+mk('psu','750','750W 80+ Gold','Generic',105,{watt:750,d:'Качествен модел',gen:1}),
+mk('psu','850','850W 80+ Gold','Generic',135,{watt:850,d:'Качествен модел',gen:1}),
+mk('case','matx','Airflow mATX Case','Generic',45,{ff:['mATX','ITX'],gpuMax:320,cool:160,rad:0,d:'mATX',gen:1}),
+mk('case','atx','Airflow ATX Case','Generic',65,{ff:['ATX','mATX','ITX'],gpuMax:360,cool:165,rad:240,d:'ATX',gen:1}),
+mk('case','aq','Aquarium ATX Case','Generic',95,{ff:['ATX','mATX','ITX'],gpuMax:350,cool:160,rad:240,d:'ATX',gen:1}),
+mk('cooler','tower','Tower Air Cooler','Generic',30,{type:'Въздушен',h:155,tdp:150,rad:0,sockets:['AM4','AM5','LGA1700'],d:'Въздушно охлаждане',gen:1}),
+mk('cooler','dual','Dual Tower Air Cooler','Generic',50,{type:'Въздушен',h:158,tdp:220,rad:0,sockets:['AM4','AM5','LGA1700'],d:'Двоен радиатор',gen:1}),
+mk('cooler','aio240','240mm AIO Liquid Cooler','Generic',85,{type:'AIO 240 mm',h:0,tdp:250,rad:240,sockets:['AM4','AM5','LGA1700'],d:'Течно охлаждане',gen:1})
+];
+const byId={};DB.forEach(p=>byId[p.id]=p);
+const CATS=[["cpu","Процесор"],["gpu","Видео карта"],["board","Дънна платка"],["ram","RAM"],["ssd","SSD"],["psu","Захранване"],["case","Кутия"],["cooler","Охлаждане"]];
+const CN=Object.fromEntries(CATS);
+const SPEC={
+cpu:[['Сокет',p=>p.socket],['Памет',p=>p.ddr.join('/')],['Макс. мощност',p=>p.w+' W'],['Ядра',p=>p.d]],
+gpu:[['VRAM',p=>p.vram+' GB'],['Дължина*',p=>p.len+' mm'],['Мощност',p=>p.w+' W'],['Индекс',p=>p.perf]],
+board:[['Сокет',p=>p.socket],['Памет',p=>p.ddr],['Формат',p=>p.ff],['RAM слотове',p=>p.slots]],
+ram:[['Тип',p=>p.ddr],['Капацитет',p=>p.gb+' GB'],['Модули',p=>p.sticks],['Честота',p=>p.mhz+' MHz']],
+ssd:[['Капацитет',p=>p.gb>=1000?p.gb/1000+' TB':p.gb+' GB'],['Интерфейс',p=>p.ifc]],
+psu:[['Мощност',p=>p.watt+' W'],['Сертификат','80+ Gold']].map(x=>[x[0],typeof x[1]==='function'?x[1]:()=>x[1]]),
+case:[['Формати',p=>p.ff.join('/')],['Макс. GPU',p=>p.gpuMax+' mm'],['Макс. охладител',p=>p.cool+' mm'],['240 mm радиатор',p=>p.rad?'Да':'Не']],
+cooler:[['Тип',p=>p.type],['Височина',p=>p.h?p.h+' mm':'—'],['Капацитет',p=>p.tdp+' W'],['Сокети',p=>p.sockets.join('/')]]};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+let sel={},cmp=[],userImg=store.get('bw.img')||{},memSaves=[];
+const S={cat:'cpu',q:'',sort:'def',brand:'all',cond:'all',mode:'manual',games:null};
+const $=id=>document.getElementById(id);
+const price=n=>n.toLocaleString('bg-BG')+' €';
+const B=()=>{const b={};CATS.forEach(([k])=>{if(sel[k]&&byId[sel[k]])b[k]=byId[sel[k]]});return b};
+const total=b=>Object.values(b).reduce((s,p)=>s+p.price,0);
+const psuNeed=(c,g)=>Math.ceil((c.w+g.w+100)*1.25/50)*50;
+/* ---------- Съвместимост (правила; 'ok' само при реална проверка) ---------- */
+function checks(b){const{cpu,gpu,board,ram,psu,case:cs,cooler}=b,r=[];
+const chk=(cats,need,fn,na)=>{if(need){const[s,t]=fn();r.push({cats,s,t})}else r.push({cats,s:'na',t:na})};
+chk(['cpu','board'],cpu&&board,()=>cpu.socket===board.socket?['ok',`Сокет ${cpu.socket}: процесорът и дъното съвпадат`]:['bad',`Сокет: процесорът е ${cpu.socket}, а дъното е ${board.socket}`],'Сокет: избери процесор и дънна платка');
+chk(['board','ram'],board&&ram,()=>board.ddr===ram.ddr?['ok',`Дъното поддържа ${ram.ddr}`]:['bad',`Дъното е ${board.ddr}, а RAM е ${ram.ddr}`],'Тип RAM: избери дънна платка и RAM');
+chk(['cpu','ram'],cpu&&ram,()=>cpu.ddr.includes(ram.ddr)?['ok',`Процесорът работи с ${ram.ddr}`]:['bad',`Процесорът поддържа само ${cpu.ddr.join('/')}, не ${ram.ddr}`],'CPU ↔ RAM: избери процесор и RAM');
+chk(['board','ram'],board&&ram,()=>ram.sticks>board.slots?['bad',`RAM комплектът е ${ram.sticks} модула, дъното има ${board.slots} слота`]:ram.gb>board.max?['bad',`Дъното поддържа до ${board.max} GB`]:['ok',`${ram.sticks} модула / ${ram.gb} GB са в лимитите на дъното`],'Слотове/капацитет RAM: избери дъно и RAM');
+chk(['gpu','case'],gpu&&cs,()=>gpu.len>cs.gpuMax?['bad',`Видеокартата (~${gpu.len} mm) е по-дълга от ${cs.gpuMax} mm в кутията`]:gpu.len>cs.gpuMax-20?['warn',`Видеокартата (~${gpu.len} mm) влиза тясно в ${cs.gpuMax} mm — провери точния модел`]:['ok',`Видеокарта ~${gpu.len} mm ≤ ${cs.gpuMax} mm в кутията`],'Дължина на GPU: избери видеокарта и кутия');
+chk(['board','case'],board&&cs,()=>cs.ff.includes(board.ff)?['ok',`Кутията поддържа ${board.ff} дъно`]:['bad',`Кутията не поддържа ${board.ff} дъно`],'Формат на дъното: избери дъно и кутия');
+chk(['cpu','gpu','psu'],cpu&&gpu&&psu,()=>{const n=psuNeed(cpu,gpu),min=cpu.w+gpu.w+100,t=`препоръчани ≥${n} W (CPU ${cpu.w} + GPU ${gpu.w} + 100 W, +25% запас), избрани ${psu.watt} W`;return psu.watt>=n?['ok','Захранване: '+t]:psu.watt>=min?['warn','Захранване на границата: '+t]:['bad','Захранването е недостатъчно: '+t]},'Захранване: избери процесор, видеокарта и PSU');
+chk(['cooler','cpu'],cooler&&cpu,()=>cooler.sockets.includes(cpu.socket)?['ok',`Охладителят поддържа ${cpu.socket}`]:['bad',`Охладителят не поддържа ${cpu.socket}`],'Сокет на охладител: избери охладител и процесор');
+chk(['cooler','cpu'],cooler&&cpu,()=>cooler.tdp>=cpu.w*1.25?['ok',`Охладител ${cooler.tdp} W ≥ нужните ~${Math.round(cpu.w*1.25)} W`]:cooler.tdp>=cpu.w?['warn',`Охладителят (${cooler.tdp} W) е на границата за процесор до ${cpu.w} W`]:['bad',`Охладителят (${cooler.tdp} W) е слаб за процесор до ${cpu.w} W`],'Охлаждане на CPU: избери охладител и процесор');
+chk(['cooler','case'],cooler&&cs,()=>cooler.rad?(cs.rad>=cooler.rad?['ok',`Кутията поддържа ${cooler.rad} mm радиатор`]:['bad',`Кутията не поддържа ${cooler.rad} mm радиатор`]):(cooler.h<=cs.cool?['ok',`Охладител ${cooler.h} mm ≤ ${cs.cool} mm в кутията`]:['bad',`Охладителят (${cooler.h} mm) е по-висок от ${cs.cool} mm`]),'Охладител ↔ кутия: избери и двете');
+chk(['board','cpu'],cpu&&board&&cpu.socket===board.socket,()=>['warn','BIOS: НЕ е проверен. Сокетът съвпада, но някои платки изискват обновен BIOS за конкретния процесор — виж списъка на производителя'],'BIOS: първо трябва да съвпадат процесор и дъно');
+return r}
+const ICON={ok:'✓',bad:'✕',warn:'!',na:'–'};
+const ckList=a=>a.map(c=>`<div class="ck ${c.s}"><b>${ICON[c.s]}</b><span>${esc(c.t)}</span></div>`).join('');
+/* ---------- Изображения ---------- */
+const imgUrl=p=>{const u=userImg[p.id]||IMAGES[p.id]||p.img;return /^https?:\/\//i.test(u||'')?u:''};
+const fbHTML=p=>`<div class="fb">${art(p.cat)}<span>Няма снимка на модела</span></div>`;
+const imgHTML=p=>{const u=imgUrl(p);return u?`<img src="${esc(u)}" alt="${esc(p.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-id="${p.id}" onerror="imgFail(this)">`:fbHTML(p)};
+function imgFail(el){el.outerHTML=fbHTML(byId[el.dataset.id])}
+/* ---------- Каталог ---------- */
+const condL=p=>p.cond==='used'?'Употребявано':'Ново';
+function items(){let a=DB.filter(p=>p.cat===S.cat);const q=S.q.trim().toLowerCase();
+if(q)a=a.filter(p=>(p.name+' '+p.brand+' '+p.d).toLowerCase().includes(q));
+if(S.brand!=='all')a=a.filter(p=>p.brand===S.brand);if(S.cond!=='all')a=a.filter(p=>p.cond===S.cond);
+if(S.sort==='asc')a.sort((x,y)=>x.price-y.price);else if(S.sort==='desc')a.sort((x,y)=>y.price-x.price);else if(S.sort==='name')a.sort((x,y)=>x.name.localeCompare(y.name));return a}
+function badge(p){const rel=checks({...B(),[p.cat]:p}).filter(c=>c.cats.includes(p.cat)),bad=rel.find(c=>c.s==='bad');
+if(bad)return`<div class="bd bad">✕ ${esc(bad.t)}</div>`;const w=rel.find(c=>c.s==='warn'),ok=rel.filter(c=>c.s==='ok').length;
+if(ok)return`<div class="bd ${w?'warn':'ok'}">${w?'! Проверено частично — виж детайлите':`✓ Съвместимо с избраните (${ok} проверки)`}</div>`;
+return`<div class="bd na">Съвместимостта още не е проверена — избери свързани части</div>`}
+function card(p,i){const on=sel[p.cat]===p.id,has=!!sel[p.cat];
+return`<article class="card ${on?'sel':''}" style="animation-delay:${Math.min(i,8)*30}ms"><div class="img">${imgHTML(p)}<span class="cond ${p.cond}">${condL(p)}</span>${on?'<span class="selmark">✓ ИЗБРАНО</span>':''}</div>
+<div class="ci"><div class="mfr">${esc(p.brand)}</div><h3>${esc(p.name)}</h3><div class="specs">${SPEC[p.cat].slice(0,4).map(([l,f])=>`<span>${l}: ${esc(f(p))}</span>`).join('')}</div>${badge(p)}
+<div class="prow"><b>${price(p.price)}</b><label class="cmp"><input type="checkbox" data-act="cmp" data-id="${p.id}" ${cmp.includes(p.id)?'checked':''}>Сравни</label></div>
+<div class="btns"><button data-act="pick" data-id="${p.id}" class="${on?'danger':''}">${on?'ПРЕМАХНИ ✕':has?'ЗАМЕНИ ⇄':'ДОБАВИ +'}</button><button class="secondary" data-act="info" data-id="${p.id}">Детайли</button></div></div></article>`}
+function renderCards(){const a=items();$('cards').innerHTML=a.length?a.map(card).join(''):'<div class="empty" style="grid-column:1/-1">Няма продукти по тези филтри.<br><br><button class="secondary" data-act="reset">Изчисти филтрите</button></div>'}
+function renderTabs(){$('categoryTabs').innerHTML=CATS.map(([k,n])=>`<button class="tab ${k===S.cat?'active':''}" data-act="cat" data-id="${k}">${n}${sel[k]?' ✓':''}</button>`).join('')}
+function renderTools(){const br=[...new Set(DB.filter(p=>p.cat===S.cat).map(p=>p.brand))];if(S.brand!=='all'&&!br.includes(S.brand))S.brand='all';
+$('fb').innerHTML='<option value="all">Всички</option>'+br.map(b=>`<option ${b===S.brand?'selected':''}>${esc(b)}</option>`).join('')}
+function renderBuild(){const b=B(),t=total(b);$('total').innerHTML=`${price(t)} <small>/ общо</small>`;$('barTotal').textContent=price(t);
+$('rows').innerHTML=CATS.map(([k,n])=>{const p=b[k];return p?`<div class="brow"><div class="th">${imgHTML(p)}</div><div class="nm"><small>${n}</small>${esc(p.name)}<small>${price(p.price)}</small></div><div class="ac"><button data-act="change" data-id="${k}" aria-label="Смени">⇄</button><button data-act="clearOne" data-id="${k}" aria-label="Премахни">✕</button></div></div>`:`<div class="brow empty" data-act="change" data-id="${k}"><div class="th">+</div><div class="nm"><small>${n}</small>Не е избрано</div></div>`}).join('');
+const c=checks(b),bad=c.filter(x=>x.s==='bad'),warn=c.filter(x=>x.s==='warn'),ok=c.filter(x=>x.s==='ok'),el=$('compat');
+let cls='na',msg=`Избери части, за да се проверят ${c.length} точки за съвместимост.`;
+if(bad.length){cls='bad';msg=`✕ Открити несъвместимости (${bad.length}): `+bad.map(x=>x.t).join('; ')}
+else if(ok.length){cls=warn.length?'warn':'';msg=`✓ Проверени без проблем: ${ok.length} от ${c.length} точки.`+(warn.length?` ! ${warn.length} с предупреждение.`:'')+' Останалите не са проверени — това не е гаранция за съвместимост.'}
+el.className='notice '+cls;el.textContent=msg;$('cklist').innerHTML=ckList(c);$('cmpBtn').textContent=`СРАВНИ (${cmp.length})`}
+function update(){renderTabs();renderBuild();renderCards();renderFps()}
+/* ---------- FPS (груб модел, не бенчмарк) ---------- */
+const GAMES=[['fortnite','Fortnite',1.6,2.2,0],['cs2','CS2',3.2,3.4,0],['valorant','Valorant',5,6,0],['mc','Minecraft Java',3.5,4,0],['gtav','GTA V',1.9,2.4,0],['cp','Cyberpunk 2077 (без RT)',.75,1.4,0],['apex','Apex Legends',1.5,2,0],['rdr2','Red Dead Redemption 2',.6,1.1,0],['elden','Elden Ring (лимит 60)',.8,1.5,60]];
+const RES={'1080':1,'1440':.66,'4k':.36},QL={low:1.45,med:1.2,high:1,ultra:.78},RL={'1080':'1080p','1440':'1440p','4k':'4K'};
+S.games=new Set(GAMES.map(g=>g[0]));
+function fpsCalc(g,c,game,res,q){const gl=g.perf*game[2]*QL[q]/RES[res],cl=c?c.perf*game[3]:Infinity;let f=Math.min(gl,cl),lim=gl<=cl?'GPU':'CPU';if(game[4]&&f>game[4]){f=game[4];lim='лимит на играта'}return{lo:Math.round(f*.88),hi:Math.round(f*1.12),lim}}
+function renderFps(){$('gchips').innerHTML=GAMES.map(g=>`<button class="${S.games.has(g[0])?'on':''}" data-act="tog" data-id="${g[0]}">${g[1].replace(/ \(.*/,'')}</button>`).join('');
+const b=B(),g=b.gpu,res=$('fres').value,q=$('fq').value;if(!g){$('fpsOut').innerHTML='<div class="empty">Избери видеокарта, за да видиш приблизителна прогноза.</div>';return}
+let h=GAMES.filter(x=>S.games.has(x[0])).map(x=>{const r=fpsCalc(g,b.cpu,x,res,q);return`<div class="fr"><div>${x[1]}<small>Ограничава: ${r.lim}</small></div><b>~${r.lo}–${r.hi}</b></div>`}).join('');
+if(!b.cpu)h='<div class="tiny" style="margin:0 0 8px">Без избран процесор се отчита само лимитът на видеокартата.</div>'+h;
+if(g.vram<=8&&(res==='4k'||(res==='1440'&&q==='ultra')))h='<div class="notice warn" style="margin:0 0 8px">8 GB VRAM може да е недостатъчно при тези настройки — реалните FPS може да са по-ниски.</div>'+h;
+$('fpsOut').innerHTML=h||'<div class="empty">Избери поне една игра.</div>'}
+/* ---------- Smart Build (локален алгоритъм) ---------- */
+function smart(){const bud=Math.max(300,Number($('budget').value)||1000),use=$('usage').value,res=$('resolution').value,cond=$('condition').value,br=[...document.querySelectorAll('.brands input:checked')].map(x=>x.value);
+const pool=c=>{let a=DB.filter(p=>p.cat===c);if(cond==='new')a=a.filter(p=>p.cond==='new');if(cond==='used'){const u=a.filter(p=>p.cond==='used');if(u.length)a=u}
+const want=c==='cpu'?['AMD','Intel']:c==='gpu'?['AMD','NVIDIA']:null;if(want){const w=br.filter(x=>want.includes(x));if(w.length)a=a.filter(p=>w.includes(p.brand))}return a.sort((x,y)=>x.price-y.price)};
+const first=(c,f)=>pool(c).find(f),gbMin=(use==='gaming'||use==='competitive')?16:32;
+const W={gaming:res==='4k'?[.8,.2]:res==='1440'?[.65,.35]:[.55,.45],competitive:[.35,.65],streaming:[.5,.5],editing:[.4,.6],work:[.25,.75]}[use];
+let best=null,cheapest=Infinity;
+for(const c of pool('cpu'))for(const g of pool('gpu')){const b={cpu:c,gpu:g};b.board=first('board',x=>x.socket===c.socket&&c.ddr.includes(x.ddr));if(!b.board)continue;
+b.ram=first('ram',x=>x.ddr===b.board.ddr&&x.gb>=gbMin&&x.sticks<=b.board.slots);b.ssd=first('ssd',x=>x.gb>=1000);const need=psuNeed(c,g);b.psu=first('psu',x=>x.watt>=need);
+let ok=false;for(const cs of pool('case').filter(x=>x.ff.includes(b.board.ff)&&g.len<=x.gpuMax)){const co=first('cooler',x=>x.sockets.includes(c.socket)&&x.tdp>=c.w*1.25&&(x.rad?cs.rad>=x.rad:x.h<=cs.cool));if(co){b.case=cs;b.cooler=co;ok=true;break}}
+if(!ok||!b.ram||!b.ssd||!b.psu)continue;const t=total(b);cheapest=Math.min(cheapest,t);if(t>bud||checks(b).some(x=>x.s==='bad'))continue;
+const gN=g.perf/120,cN=c.perf/115,score=W[0]*gN+W[1]*cN-.3*Math.abs(gN-cN);if(!best||score>best.score+1e-9||(Math.abs(score-best.score)<1e-9&&t<best.t))best={b,t,score,gN,cN}}
+const out=$('smartOut');if(!best){out.textContent=`Няма пълна съвместима конфигурация до ${bud} € с тези филтри.`+(isFinite(cheapest)?` Най-евтината възможна тук е около ${cheapest} €.`:' Опитай с повече марки или условия.');toast('Няма конфигурация за тези условия');return}
+sel={};Object.entries(best.b).forEach(([k,p])=>sel[k]=p.id);S.cat='cpu';renderTools();update();
+const{b,t,gN,cN}=best;out.innerHTML=`<b>Резултат: ${price(t)} от ${price(bud)}</b> (останали ${price(bud-t)}). Избрани: ${esc(b.cpu.name)} + ${esc(b.gpu.name)}${Math.abs(gN-cN)>.25?`. ${gN>cN?'Процесорът':'Видеокартата'} е по-слабото звено при този бюджет.`:'; CPU и GPU са сравнително балансирани.'}<br>Можеш да смениш всяка част от списъка вдясно или от каталога.<br><span style="color:var(--muted)">Ограничения: малък каталог, цените не са актуални, оценката е по прости правила (индекси на CPU/GPU, цена, съвместимост) — не е AI и не отчита наличност или реални бенчмаркове.</span>`;
+toast('Smart Build избра конфигурация');go('summary')}
+/* ---------- Помощници ---------- */
+let tt;function toast(t){const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(tt);tt=setTimeout(()=>el.style.display='none',2400)}
+function go(id){$('nav').classList.remove('open');const el=$(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+function openModal(h){const m=$('modal');m.innerHTML=`<div class="mb" role="dialog" aria-modal="true"><button class="x" data-act="close" aria-label="Затвори">✕</button>${h}</div>`;m.hidden=false;document.body.classList.add('lock')}
+function closeModal(){$('modal').hidden=true;document.body.classList.remove('lock')}
+function summaryText(){const b=B(),L=['BuildWise PC конфигурация'];CATS.forEach(([k,n])=>{if(b[k])L.push(`${n}: ${b[k].name} — ${b[k].price} €`)});L.push('Общо: '+price(total(b)));return L.join('\n')}
+function link(){const ids=Object.values(sel).join(',');return location.href.split('#')[0]+(ids?'#b='+ids:'')}
+async function copyText(t,msg){let done=false;try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(t);done=true}}catch(e){}
+if(!done){const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px';document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,t.length);try{done=document.execCommand('copy')}catch(e){}ta.remove()}
+if(done)toast(msg||'Копирано!');else{openModal(`<h2>Копирай ръчно</h2><p class="tiny">Автоматичното копиране не е позволено. Натисни и задръж текста, за да го копираш.</p><textarea id="manual" readonly>${esc(t)}</textarea>`);setTimeout(()=>{const x=$('manual');if(x){x.focus();x.select()}},50)}}
+const saves=()=>store.get('bw.saves')||memSaves;
+function putSaves(a){memSaves=a;if(!store.set('bw.saves',a))toast('Хранилището на браузъра е недостъпно — запазено само за тази сесия')}
+function savesHTML(){const a=saves();return a.length?a.map((s,i)=>`<div class="sv"><div><b>${esc(s.name)}</b><small>${price(s.total)} · ${new Date(s.t).toLocaleDateString('bg-BG')}</small></div><div style="display:flex;gap:6px"><button data-act="loadOne" data-id="${i}">Зареди</button><button class="danger" data-act="delSave" data-id="${i}">✕</button></div></div>`).join(''):'<div class="empty">Няма запазени конфигурации.</div>'}
+function applyIds(ids){const n={};ids.forEach(id=>{const p=byId[id];if(p)n[p.cat]=id});sel=n;cmp=[];update()}
+/* ---------- Действия ---------- */
+const act={
+mode(m){S.mode=m;$('manualTab').classList.toggle('active',m==='manual');$('smartTab').classList.toggle('active',m==='smart');$('smartBox').style.display=m==='smart'?'block':'none'},
+cat(k){S.cat=k;renderTools();renderTabs();renderCards()},
+pick(id,t){const p=byId[id];if(sel[p.cat]===id){delete sel[p.cat];toast(p.name+' е премахнат')}else{sel[p.cat]=id;toast(p.name+' е избран')}if(t.closest('#modal'))closeModal();update()},
+info(id){const p=byId[id],rel=checks({...B(),[p.cat]:p}).filter(c=>c.cats.includes(p.cat)),on=sel[p.cat]===id;
+openModal(`<div class="mimg">${imgHTML(p)}</div><div class="mfr">${esc(p.brand)} · ${CN[p.cat]}</div><h2>${esc(p.name)}</h2><div class="price">${price(p.price)} <small>${condL(p)} · ориентировъчна цена</small></div><p>${esc(p.d)}</p><div class="tw"><table class="spec">${SPEC[p.cat].map(([l,f])=>`<tr><td>${l}</td><td>${esc(f(p))}</td></tr>`).join('')}</table></div>${p.gen?'<div class="tiny">Генеричен модел: параметрите са типични за категорията, не за конкретен продукт.</div>':''}${p.cat==='gpu'?'<div class="tiny">*Дължината е типична; при различните производители на карти варира.</div>':''}
+<h4>СЪВМЕСТИМОСТ С ТЕКУЩИЯ ИЗБОР</h4>${ckList(rel)}<h4>СВОЯ СНИМКА (URL)</h4><input id="imgUrl" type="url" inputmode="url" placeholder="https://…" value="${esc(userImg[p.id]||'')}"><div class="btns" style="margin:8px 0 14px"><button class="secondary" data-act="setImg" data-id="${id}">Запази снимката</button><button class="secondary" data-act="resetImg" data-id="${id}">Премахни</button></div><button style="width:100%" class="${on?'danger':''}" data-act="pick" data-id="${id}">${on?'ПРЕМАХНИ ✕':sel[p.cat]?'ЗАМЕНИ ⇄':'ДОБАВИ +'}</button>`)},
+setImg(id){const u=($('imgUrl').value||'').trim();if(!/^https?:\/\//i.test(u)){toast('Въведи валиден http(s) адрес');return}userImg[id]=u;store.set('bw.img',userImg);update();act.info(id);toast('Снимката е запазена')},
+resetImg(id){delete userImg[id];store.set('bw.img',userImg);update();act.info(id)},
+cmp(id,t){const p=byId[id];if(t.checked){cmp=cmp.filter(x=>byId[x].cat===p.cat);if(cmp.length>=3){t.checked=false;toast('Най-много 3 продукта');return}cmp.push(id)}else cmp=cmp.filter(x=>x!==id);renderBuild()},
+compare(){if(cmp.length<2){toast('Отбележи поне 2 продукта от една категория с „Сравни“');return}const a=cmp.map(i=>byId[i]),c=a[0].cat;
+openModal(`<h2>Сравнение: ${CN[c]}</h2><div class="tw"><table class="spec"><tr><td></td>${a.map(p=>`<th>${esc(p.name)}</th>`).join('')}</tr><tr><td>Цена</td>${a.map(p=>`<td><b>${price(p.price)}</b></td>`).join('')}</tr><tr><td>Състояние</td>${a.map(p=>`<td>${condL(p)}</td>`).join('')}</tr><tr><td>Производител</td>${a.map(p=>`<td>${esc(p.brand)}</td>`).join('')}</tr>${SPEC[c].map(([l,f])=>`<tr><td>${l}</td>${a.map(p=>`<td>${esc(f(p))}</td>`).join('')}</tr>`).join('')}<tr><td>Съвместимост</td>${a.map(p=>{const r=checks({...B(),[c]:p}).filter(x=>x.cats.includes(c));return`<td>${r.some(x=>x.s==='bad')?'<span style="color:var(--red)">✕ Има проблем</span>':r.some(x=>x.s==='ok')?'<span style="color:var(--green)">✓ Без проблем в проверените</span>':'Не е проверена'}</td>`}).join('')}</tr><tr><td></td>${a.map(p=>`<td><button data-act="pick" data-id="${p.id}">Избери</button></td>`).join('')}</tr></table></div>`)},
+change(k){S.cat=k;S.q='';$('q').value='';renderTools();renderTabs();renderCards();go('builder')},
+clearOne(k){delete sel[k];update()},clear(){sel={};cmp=[];update();toast('Изборът е изчистен')},
+reset(){S.q='';S.brand='all';S.cond='all';$('q').value='';$('fc').value='all';renderTools();renderCards()},
+tog(id){S.games.has(id)?S.games.delete(id):S.games.add(id);renderFps()},
+smart,go,menu(){const o=$('nav').classList.toggle('open');$('burger').setAttribute('aria-expanded',o)},close:closeModal,
+copy(){if(!Object.keys(sel).length){toast('Няма избрани части');return}copyText(summaryText()+'\n'+link(),'Конфигурацията е копирана!')},
+async share(){if(!Object.keys(sel).length){toast('Няма избрани части');return}const d={title:'BuildWise PC',text:summaryText(),url:link()};if(navigator.share){try{await navigator.share(d);return}catch(e){if(e&&e.name==='AbortError')return}}copyText(d.text+'\n'+d.url,'Линкът е копиран!')},
+save(){if(!Object.keys(sel).length){toast('Няма какво да се запази');return}openModal(`<h2>Запази конфигурация</h2><input id="sname" placeholder="Име (по желание)" maxlength="40"><button style="width:100%;margin:10px 0" data-act="saveCur">ЗАПАЗИ</button><h4>ЗАПАЗЕНИ</h4>${savesHTML()}`)},
+saveCur(){const a=saves(),b=B();a.unshift({name:($('sname').value||'').trim()||'Билд '+(a.length+1),ids:Object.values(sel),total:total(b),t:Date.now()});putSaves(a.slice(0,20));toast('Запазено');closeModal()},
+load(){closeModal();openModal(`<h2>Запазени конфигурации</h2>${savesHTML()}`)},
+loadOne(i){const s=saves()[i];if(s){applyIds(s.ids);closeModal();toast('Заредено: '+s.name);go('summary')}},
+delSave(i){const a=saves();a.splice(i,1);putSaves(a);act.load()}};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t)return;const f=act[t.dataset.act];if(f)f(t.dataset.id,t,e)});
+$('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+$('q').addEventListener('input',e=>{S.q=e.target.value;renderCards()});
+$('sort').addEventListener('change',e=>{S.sort=e.target.value;renderCards()});
+$('fb').addEventListener('change',e=>{S.brand=e.target.value;renderCards()});
+$('fc').addEventListener('change',e=>{S.cond=e.target.value;renderCards()});
+$('fres').addEventListener('change',renderFps);$('fq').addEventListener('change',renderFps);
+renderTools();act.mode('manual');
+const m=location.hash.match(/^#b=(.+)$/);if(m)applyIds(decodeURIComponent(m[1]).split(','));else update();
+</script></body></html>
